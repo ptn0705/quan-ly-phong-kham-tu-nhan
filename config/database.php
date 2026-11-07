@@ -10,7 +10,7 @@ class Database {
             $password = "";
         } else {
             $host     = "sql310.infinityfree.com";
-            $db_name  = "if0_43274371_phongkham";
+            $db_name  = "if0_43274371_phong_kham_tu_nhan";
             $username = "if0_43274371";
             $password = "ptndb2005";
         }
