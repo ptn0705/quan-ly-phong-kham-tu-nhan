@@ -19,7 +19,7 @@ $tenVaiTro = [
 <body class="bg-light">
 <nav class="navbar navbar-expand-lg navbar-dark bg-success shadow-sm mb-4">
     <div class="container">
-        <a class="navbar-brand fw-bold" href="index.php">Phòng khám tư nhân Thái Nguyên</a>
+        <a class="navbar-brand fw-bold" href="index.php">Phòng khám Thái Nguyên</a>
         <div class="collapse navbar-collapse">
             <ul class="navbar-nav me-auto">
                 <li class="nav-item">
