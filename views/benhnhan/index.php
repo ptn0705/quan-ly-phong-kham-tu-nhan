@@ -5,7 +5,6 @@ $keyword = $keyword ?? '';
 $dsBenhNhan = $dsBenhNhan ?? [];
 ?>
 <div class="row g-4">
-    <!-- Cột trái: Form Thêm / Sửa -->
     <div class="col-md-4">
         <div class="card shadow-sm border-0">
             <div class="card-header bg-success text-white fw-bold">
@@ -59,7 +58,7 @@ $dsBenhNhan = $dsBenhNhan ?? [];
         </div>
     </div>
 
-    <!-- Cột phải: Danh sách & Tìm kiếm -->
+
     <div class="col-md-8">
         <?php if (!empty($_SESSION['err_msg'])): ?>
             <div class="alert alert-danger py-2"><?= htmlspecialchars($_SESSION['err_msg']); unset($_SESSION['err_msg']); ?></div>
