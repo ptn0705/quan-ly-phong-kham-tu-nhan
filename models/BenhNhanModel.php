@@ -32,8 +32,8 @@ class BenhNhanModel{
     }
 
     public function create($data){
-        $sql = "insert into benhnhan (MaBN, HoTenBN, NgaySinh, GioiTinh, SoDienThoai, DiaChi, TieuSuBenh)
-                values (:MaBN, :HoTenBN, :NgaySinh, :SoDienThoai, :DiaChi, :TieuSuBenh";
+        $sql = "insert into benhnhan (MaBN, HoTenBN, NgaySinh, GioiTinh, SoDienThoai, DiaChi, TienSuBenh)
+                values (:MaBN, :HoTenBN, :NgaySinh, :SoDienThoai, :DiaChi, :TieuSuBenh)";
         $stmt = $this->conn->prepare($sql);
         return $stmt->execute($data);
     }
