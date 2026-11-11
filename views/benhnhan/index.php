@@ -66,7 +66,7 @@ $dsBenhNhan = $dsBenhNhan ?? [];
 
         <div class="card shadow-sm border-0">
             <div class="card-header bg-white d-flex justify-content-between align-items-center py-3">
-                <h6 class="mb-0 fw-bold text-success">DANH SÁCH BỆNH NHÂN (CRUD MVP)</h6>
+                <h6 class="mb-0 fw-bold text-success">DANH SÁCH BỆNH NHÂN</h6>
                 <form class="d-flex gap-2" method="GET" action="index.php">
                     <input type="hidden" name="controller" value="benhnhan">
                     <input type="hidden" name="action" value="index">
@@ -82,7 +82,7 @@ $dsBenhNhan = $dsBenhNhan ?? [];
                             <th>Họ tên</th>
                             <th>Ngày sinh</th>
                             <th>Giới tính</th>
-                            <th>SĐT</th>
+                            <th>Số điện thoại</th>
                             <th>Tiền sử bệnh</th>
                             <th class="text-end">Thao tác</th>
                         </tr>

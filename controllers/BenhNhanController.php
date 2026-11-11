@@ -21,25 +21,30 @@ class BenhNhanController {
 
     public function save() {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $isUpdate = !empty($_POST['is_update']);
-            $data = [
-                ':MaBN'        => $isUpdate ? trim($_POST['MaBN']) : $this->model->generateNewId(),
-                ':HoTenBN'     => trim($_POST['HoTenBN']),
-                ':NgaySinh'    => $_POST['NgaySinh'],
-                ':GioiTinh'    => $_POST['GioiTinh'],
-                ':SoDienThoai' => trim($_POST['SoDienThoai']),
-                ':DiaChi'      => trim($_POST['DiaChi']),
-                ':TienSuBenh'  => trim($_POST['TienSuBenh'])
-            ];
+            try {
+                $isUpdate = !empty($_POST['is_update']);
+                $data = [
+                    ':MaBN'        => $isUpdate ? trim($_POST['MaBN']) : $this->model->generateNewId(),
+                    ':HoTenBN'     => trim($_POST['HoTenBN']),
+                    ':NgaySinh'    => $_POST['NgaySinh'],
+                    ':GioiTinh'    => $_POST['GioiTinh'],
+                    ':SoDienThoai' => trim($_POST['SoDienThoai']),
+                    ':DiaChi'      => trim($_POST['DiaChi']),
+                    ':TienSuBenh'  => trim($_POST['TienSuBenh'])
+                ];
 
-            if ($isUpdate) {
-                $this->model->update($data);
-            } else {
-                $this->model->create($data);
+                if ($isUpdate) {
+                    $this->model->update($data);
+                } else {
+                    $this->model->create($data);
+                }
+                
+                header("Location: index.php?controller=benhnhan&action=index");
+                exit;
+            } catch (Exception $e) {
+                die("Lỗi khi lưu bệnh nhân: " . $e->getMessage());
             }
         }
-        header("Location: index.php?controller=benhnhan&action=index");
-        exit;
     }
 
     public function delete() {
