@@ -32,11 +32,11 @@ class BenhNhanModel{
     }
 
     public function create($data){
-        $sql = "insert into benhnhan (MaBN, HoTenBN, NgaySinh, GioiTinh, SoDienThoai, DiaChi, TienSuBenh)
-                values (:MaBN, :HoTenBN, :NgaySinh, :SoDienThoai, :DiaChi, :TieuSuBenh)";
-        $stmt = $this->conn->prepare($sql);
-        return $stmt->execute($data);
-    }
+    $sql = "INSERT INTO benhnhan (MaBN, HoTenBN, NgaySinh, GioiTinh, SoDienThoai, DiaChi, TienSuBenh)
+            VALUES (:MaBN, :HoTenBN, :NgaySinh, :GioiTinh, :SoDienThoai, :DiaChi, :TienSuBenh)";
+    $stmt = $this->conn->prepare($sql);
+    return $stmt->execute($data);
+    } 
 
     public function delete($maBN){
         $stmt = $this->conn->prepare("delete from benhnhan where MaBN = :maBN");
