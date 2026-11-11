@@ -9,12 +9,12 @@ class BenhNhanModel{
 
     public function getAll($keyword = ''){
         if ($keyword !== ''){
-            $sql = "select * from benhnhan where HoTenBN like :kw or SoDienThoai like :kw order by MaBN desc";
+            $sql = "select * from benhnhan where HoTenBN like :kw or SoDienThoai like :kw order by MaBN asc";
             $stmt = $this->conn->prepare($sql);
             $stmt->execute([':kw' => "%$keyword%"]);
             return $stmt->fetchAll();
         }
-        return $this->conn->query("select * from benhnhan order by MaBN desc")->fetchAll();
+        return $this->conn->query("select * from benhnhan order by MaBN asc")->fetchAll();
     }
 
     public function getById($maBN){
