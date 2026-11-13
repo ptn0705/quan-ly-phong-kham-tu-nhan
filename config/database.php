@@ -5,12 +5,12 @@ class Database {
 
         if ($isLocal) {
             $host     = "127.0.0.1";
-            $db_name  = "ql_phongkham_trasanh";
+            $db_name  = "ql_hocvien";
             $username = "root";
             $password = "";
         } else {
             $host     = "sql310.infinityfree.com";
-            $db_name  = "if0_43274371_phong_kham_tu_nhan";
+            $db_name  = "if0_43274371_hoc_vien";
             $username = "if0_43274371";
             $password = "ptndb2005";
         }
