@@ -56,7 +56,7 @@ $hocviens = $stmt->fetchAll();
                             <td class="text-center"><?= htmlspecialchars($hv['GioiTinh']) ?></td>
                             <td class="text-center"><?= htmlspecialchars($hv['Sdt']) ?></td>
                             <td class="text-center">
-                                <a href="/hocvien/sua.php urlencode($hv['Mahv']) ?>" class="btn btn-primary btn-sm">Sửa</a>
+                                <a href="/hocvien/sua.php?Mahv=<?= urlencode($hv['Mahv']) ?>" class="btn btn-primary btn-sm">Sửa</a>
                                 <a href="?delete=<?= urlencode($hv['Mahv']) ?>" class="btn btn-danger btn-sm" onclick="return confirm('Bạn có chắc chắn muốn xóa học viên [<?= htmlspecialchars($hv['Mahv']) ?>] không?')">Xóa</a>
                             </td>
                         </tr>
