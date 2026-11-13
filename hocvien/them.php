@@ -53,7 +53,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                             <div class="row mb-3">
                                 <div class="col-md-6">
                                     <label for="mahv" class="form-label fw-bold">Mã học viên (*)</label>
-                                    <input type="text" class="form-control" id="mahv" name="mahv" required placeholder="Ví dụ: HV001">
+                                    <input type="text" class="form-control" id="mahv" name="mahv">
                                 </div>
                                 <div class="col-md-6">
                                     <label for="tenhv" class="form-label fw-bold">Họ và tên (*)</label>
