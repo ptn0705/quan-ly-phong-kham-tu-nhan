@@ -24,16 +24,7 @@
                 <a href="index.php?page=admin_dashboard" class="nav-link"><i class="bi bi-speedometer2 me-2"></i>Tổng quan</a>
             </li>
             <li class="nav-item">
-                <a href="index.php?page=admin_nguoidung" class="nav-link"><i class="bi bi-person-gear me-2"></i>Tài khoản NV</a>
-            </li>
-            <li class="nav-item">
-                <a href="index.php?page=admin_phongkham" class="nav-link"><i class="bi bi-door-open me-2"></i>Phòng khám</a>
-            </li>
-            <li class="nav-item">
-                <a href="index.php?page=admin_dichvu" class="nav-link"><i class="bi bi-clipboard2-pulse me-2"></i>Dịch vụ</a>
-            </li>
-            <li class="nav-item">
-                <a href="index.php?page=admin_thuoc" class="nav-link"><i class="bi bi-capsule me-2"></i>Kho thuốc</a>
+                <a href="index.php?page=admin_nguoidung" class="nav-link"><i class="bi bi-person-gear me-2"></i>Tài khoản & Phân quyền</a>
             </li>
         </ul>
         <div class="border-top pt-3">

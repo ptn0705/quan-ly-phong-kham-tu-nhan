@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?= $pageTitle ?? 'Hệ thống Nhân viên - Phòng khám' ?></title>
+    <title><?= $pageTitle ?? 'Hệ thống Nhân sự - Phòng khám' ?></title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
 </head>
@@ -12,7 +12,7 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow-sm">
     <div class="container">
         <a class="navbar-brand fw-bold" href="index.php?page=benhnhan">
-            <i class="bi bi-hospital me-2"></i>PHÒNG KHÁM (NHÂN VIÊN)
+            <i class="bi bi-hospital me-2"></i>Phòng khám tư nhân
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#staffNavbar">
             <span class="navbar-toggler-icon"></span>

@@ -86,7 +86,6 @@ switch ($page) {
         require_once 'views/layouts/user_footer.php';
         break;
 
-    // --- GIAO DIỆN QUẢN TRỊ (ADMIN) ---
     case 'admin_dashboard':
         $pageTitle = 'Tổng quan Hệ thống';
         require_once 'views/layouts/admin_header.php';
@@ -95,6 +94,59 @@ switch ($page) {
         break;
 
     case 'admin_nguoidung':
+        // Xử lý Thêm mới / Cập nhật & Phân quyền
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $isUpdate = !empty($_POST['is_update']);
+            $hoTen = trim($_POST['HoTen']);
+            $vaiTro = $_POST['VaiTro'];
+            $sdt = trim($_POST['SoDienThoai']);
+            $matKhau = trim($_POST['MatKhau'] ?? '');
+
+            try {
+                if ($isUpdate) {
+                    $maND = trim($_POST['MaND']);
+                    if ($matKhau !== '') {
+                        $stmt = $pdo->prepare("UPDATE nguoidung SET MatKhau = ?, HoTen = ?, VaiTro = ?, SoDienThoai = ? WHERE MaND = ?");
+                        $stmt->execute([$matKhau, $hoTen, $vaiTro, $sdt, $maND]);
+                    } else {
+                        $stmt = $pdo->prepare("UPDATE nguoidung SET HoTen = ?, VaiTro = ?, SoDienThoai = ? WHERE MaND = ?");
+                        $stmt->execute([$hoTen, $vaiTro, $sdt, $maND]);
+                    }
+                } else {
+                    $tenDN = trim($_POST['TenDangNhap']);
+                    $stmtMax = $pdo->query("SELECT COALESCE(MAX(CAST(SUBSTRING(MaND, 3) AS UNSIGNED)), 0) + 1 FROM nguoidung");
+                    $maND = 'ND' . str_pad($stmtMax->fetchColumn(), 3, '0', STR_PAD_LEFT);
+
+                    $stmt = $pdo->prepare("INSERT INTO nguoidung (MaND, TenDangNhap, MatKhau, HoTen, VaiTro, SoDienThoai, TrangThai) VALUES (?, ?, ?, ?, ?, ?, 1)");
+                    $stmt->execute([$maND, $tenDN, $matKhau ?: '123456', $hoTen, $vaiTro, $sdt]);
+                }
+            } catch (PDOException $e) {
+                $_SESSION['err_msg'] = "Lỗi: Tên đăng nhập đã tồn tại hoặc dữ liệu không hợp lệ!";
+            }
+
+            header("Location: index.php?page=admin_nguoidung");
+            exit;
+        }
+
+        // Xử lý Khóa / Mở khóa tài khoản
+        if (!empty($_GET['toggle'])) {
+            $stmt = $pdo->prepare("UPDATE nguoidung SET TrangThai = 1 - TrangThai WHERE MaND = ?");
+            $stmt->execute([$_GET['toggle']]);
+            header("Location: index.php?page=admin_nguoidung");
+            exit;
+        }
+
+        // Lấy thông tin tài khoản đang chọn sửa (nếu có)
+        $editND = null;
+        if (!empty($_GET['edit'])) {
+            $stmtEdit = $pdo->prepare("SELECT * FROM nguoidung WHERE MaND = ?");
+            $stmtEdit->execute([$_GET['edit']]);
+            $editND = $stmtEdit->fetch();
+        }
+
+        $dsNguoiDung = $pdo->query("SELECT * FROM nguoidung ORDER BY MaND ASC")->fetchAll();
+        require_once 'views/admin/nguoidung.php';
+        break;
     case 'admin_phongkham':
     case 'admin_dichvu':
     case 'admin_thuoc':
