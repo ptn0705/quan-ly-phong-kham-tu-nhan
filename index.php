@@ -24,24 +24,22 @@ if ($page === 'login') {
         $stmt->execute([$username]);
         $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
-        if ($user && $password === $user['MatKhau']){
+        if ($user && $password === $user['MatKhau']) {
             $_SESSION['user'] = $user;
 
-            
-        // Tự động phân luồng theo VaiTro
-        if (in_array($user['VaiTro'], ['QuanTriVien', 'ChuPhongKham'])) {
-           header('Location: index.php?page=admin_dashboard');
-        } elseif ($user['VaiTro'] === 'LeTan') {
-           header('Location: index.php?page=benhnhan'); 
-        } elseif ($user['VaiTro'] === 'BacSi') {
-           header('Location: index.php?page=luotkham');
-        } elseif ($user['VaiTro'] === 'ThuNgan') {
-           header('Location: index.php?page=hoadon');
-        } else {
-           header('Location: index.php?page=login');
-        }
-        exit;
-
+            // Tự động phân luồng theo VaiTro
+            if (in_array($user['VaiTro'], ['QuanTriVien', 'ChuPhongKham'])) {
+                header('Location: index.php?page=admin_dashboard');
+            } elseif ($user['VaiTro'] === 'LeTan') {
+                header('Location: index.php?page=benhnhan'); 
+            } elseif ($user['VaiTro'] === 'BacSi') {
+                header('Location: index.php?page=luotkham');
+            } elseif ($user['VaiTro'] === 'ThuNgan') {
+                header('Location: index.php?page=hoadon');
+            } else {
+                header('Location: index.php?page=login');
+            }
+            exit;
         } else {
             $error = 'Sai tên đăng nhập hoặc mật khẩu!';
         }
@@ -54,6 +52,24 @@ if ($page === 'login') {
 if (!isset($_SESSION['user'])) {
     header('Location: index.php?page=login');
     exit;
+}
+
+// 3.5. Kiểm tra phân quyền truy cập theo VaiTro
+$role = $_SESSION['user']['VaiTro'] ?? '';
+$permissions = [
+    'benhnhan'        => ['LeTan'],
+    'luotkham'        => ['LeTan', 'BacSi'],
+    'hoadon'          => ['ThuNgan'],
+    'admin_dashboard' => ['QuanTriVien', 'ChuPhongKham'],
+    'admin_nguoidung' => ['QuanTriVien', 'ChuPhongKham'],
+];
+
+if (isset($permissions[$page]) && !in_array($role, $permissions[$page])) {
+    http_response_code(403);
+    die('<div style="font-family:sans-serif;text-align:center;margin-top:50px;">
+            <h3 style="color:red;">403 - Bạn không có quyền truy cập trang này!</h3>
+            <a href="javascript:history.back()">Quay lại trang trước</a>
+         </div>');
 }
 
 // 4. Điều hướng các trang Giao diện Nhân viên (User) và Quản trị (Admin)
@@ -86,6 +102,7 @@ switch ($page) {
         require_once 'views/layouts/user_footer.php';
         break;
 
+    // --- GIAO DIỆN QUẢN TRỊ (ADMIN) ---
     case 'admin_dashboard':
         $pageTitle = 'Tổng quan Hệ thống';
         require_once 'views/layouts/admin_header.php';
@@ -146,14 +163,6 @@ switch ($page) {
 
         $dsNguoiDung = $pdo->query("SELECT * FROM nguoidung ORDER BY MaND ASC")->fetchAll();
         require_once 'views/admin/nguoidung.php';
-        break;
-    case 'admin_phongkham':
-    case 'admin_dichvu':
-    case 'admin_thuoc':
-        $pageTitle = 'Quản lý Danh mục';
-        require_once 'views/layouts/admin_header.php';
-        echo '<div class="alert alert-warning">Trang <strong>' . htmlspecialchars($page) . '</strong> đã kết nối layout Admin thành công.</div>';
-        require_once 'views/layouts/admin_footer.php';
         break;
 
     default:

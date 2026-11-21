@@ -18,16 +18,25 @@
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="staffNavbar">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                <li class="nav-item">
-                    <a class="nav-link" href="index.php?page=benhnhan"><i class="bi bi-people me-1"></i>Bệnh nhân</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="index.php?page=luotkham"><i class="bi bi-calendar2-check me-1"></i>Lượt khám</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="index.php?page=hoadon"><i class="bi bi-receipt me-1"></i>Hóa đơn</a>
-                </li>
+            <?php $role = $_SESSION['user']['VaiTro'] ?? ''; ?>
+            <ul class="navbar-nav me-auto">
+                <?php if ($role === 'LeTan'): ?>
+                  <li class="nav-item">
+                    <a class="nav-link" href="index.php?page=benhnhan">Bệnh nhân</a>
+                  </li>
+                <?php endif; ?>
+
+                <?php if (in_array($role, ['LeTan', 'BacSi'])): ?>
+                   <li class="nav-item">
+                     <a class="nav-link" href="index.php?page=luotkham">Lượt khám</a>
+                  </li>
+                <?php endif; ?>
+
+                <?php if ($role === 'ThuNgan'): ?>
+                  <li class="nav-item">
+                    <a class="nav-link" href="index.php?page=hoadon">Hóa đơn</a>
+                  </li>
+                <?php endif; ?>
             </ul>
             <div class="d-flex align-items-center text-white gap-3">
                 <span class="small">
