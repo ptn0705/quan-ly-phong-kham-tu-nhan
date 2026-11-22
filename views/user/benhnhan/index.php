@@ -1,6 +1,6 @@
 <?php
 $pageTitle = "Quản lý Bệnh nhân";
-require_once __DIR__ . '/../layouts/user_header.php';
+require_once __DIR__ . '/../../layouts/user_header.php';
 
 $editBN = $editBN ?? null;
 $keyword = $keyword ?? '';
@@ -111,4 +111,4 @@ $dsBenhNhan = $dsBenhNhan ?? [];
     </div>
 </div>
 
-<?php require_once __DIR__ . '/../layouts/user_footer.php'; ?>
+<?php require_once __DIR__ . '/../../layouts/user_footer.php'; ?>

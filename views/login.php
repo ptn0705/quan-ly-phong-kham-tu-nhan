@@ -22,7 +22,7 @@
         <form method="POST" action="index.php?page=login">
             <div class="mb-3">
                 <label class="form-label fw-bold">Tên đăng nhập</label>
-                <input type="text" name="username" class="form-control" required autofocus placeholder="admin / letan / bacsi">
+                <input type="text" name="username" class="form-control" required autofocus placeholder="Nhập tên đăng nhập">
             </div>
             <div class="mb-4">
                 <label class="form-label fw-bold">Mật khẩu</label>

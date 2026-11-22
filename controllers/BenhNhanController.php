@@ -16,7 +16,7 @@ class BenhNhanController {
         if (!empty($_GET['edit'])) {
             $editBN = $this->model->getById($_GET['edit']);
         }
-        require_once __DIR__ . '/../views/benhnhan/index.php';
+        require_once __DIR__ . '/../views/user/benhnhan/index.php';
     }
 
     public function save() {
