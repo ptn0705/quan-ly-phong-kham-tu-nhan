@@ -4,7 +4,6 @@ require_once __DIR__ . '/../layouts/admin_header.php';
 
 $roles = [
     'QuanTriVien'  => 'Quản trị viên',
-    'ChuPhongKham' => 'Chủ phòng khám',
     'LeTan'        => 'Lễ tân',
     'BacSi'        => 'Bác sĩ',
     'ThuNgan'      => 'Thu ngân'

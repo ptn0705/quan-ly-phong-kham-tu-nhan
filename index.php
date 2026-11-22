@@ -28,7 +28,7 @@ if ($page === 'login') {
             $_SESSION['user'] = $user;
 
             // Tự động phân luồng theo VaiTro
-            if (in_array($user['VaiTro'], ['QuanTriVien', 'ChuPhongKham'])) {
+            if (in_array($user['VaiTro'], ['QuanTriVien'])) {
                 header('Location: index.php?page=admin_dashboard');
             } elseif ($user['VaiTro'] === 'LeTan') {
                 header('Location: index.php?page=benhnhan'); 
@@ -60,8 +60,8 @@ $permissions = [
     'benhnhan'        => ['LeTan'],
     'luotkham'        => ['LeTan', 'BacSi'],
     'hoadon'          => ['ThuNgan'],
-    'admin_dashboard' => ['QuanTriVien', 'ChuPhongKham'],
-    'admin_nguoidung' => ['QuanTriVien', 'ChuPhongKham'],
+    'admin_dashboard' => ['QuanTriVien'],
+    'admin_nguoidung' => ['QuanTriVien'],
 ];
 
 if (isset($permissions[$page]) && !in_array($role, $permissions[$page])) {

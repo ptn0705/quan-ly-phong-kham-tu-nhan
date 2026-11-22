@@ -16,7 +16,6 @@ INSERT INTO `nguoidung` (`MaND`, `TenDangNhap`, `MatKhau`, `HoTen`, `VaiTro`, `S
 ('ND002', 'letan', '123456', 'Nguyễn Thị Thúy', 'LeTan', '0901000002', 1),
 ('ND003', 'bacsi', '123456', 'BS. Trần Văn Nguyên', 'BacSi', '0901000003', 1),
 ('ND004', 'thungan', '123456', 'Lê Thị Thu Ngân', 'ThuNgan', '0901000004', 1),
-('ND005', 'chupk', '123456', 'Phan Thái Nguyên', 'ChuPhongKham', '0901000005', 1);
 
 CREATE TABLE `benhnhan` (
   `MaBN` char(10) NOT NULL,
