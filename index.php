@@ -162,7 +162,7 @@ switch ($page) {
         }
 
         $dsNguoiDung = $pdo->query("SELECT * FROM nguoidung ORDER BY MaND ASC")->fetchAll();
-        require_once 'views/admin/nguoidung.php';
+        require_once 'views/admin/admin.php';
         break;
 
     default:
