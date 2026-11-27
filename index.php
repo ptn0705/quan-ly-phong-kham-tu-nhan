@@ -7,14 +7,13 @@ $pdo = $database->getConnection();
 $page = $_GET['page'] ?? 'login';
 $error = '';
 
-// 1. Xử lý Đăng xuất
 if ($page === 'logout') {
     session_destroy();
     header('Location: index.php?page=login');
     exit;
 }
 
-// 2. Xử lý Đăng nhập
+
 if ($page === 'login') {
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $username = trim($_POST['username'] ?? '');
@@ -48,13 +47,13 @@ if ($page === 'login') {
     exit;
 }
 
-// 3. Chặn truy cập nếu chưa đăng nhập
+
 if (!isset($_SESSION['user'])) {
     header('Location: index.php?page=login');
     exit;
 }
 
-// 3.5. Kiểm tra phân quyền truy cập theo VaiTro
+
 $role = $_SESSION['user']['VaiTro'] ?? '';
 $permissions = [
     'benhnhan'        => ['LeTan'],
@@ -72,9 +71,23 @@ if (isset($permissions[$page]) && !in_array($role, $permissions[$page])) {
          </div>');
 }
 
-// 4. Điều hướng các trang Giao diện Nhân viên (User) và Quản trị (Admin)
+
 switch ($page) {
-    // --- GIAO DIỆN NHÂN VIÊN (USER) ---
+    case 'admin_dichvu':
+        require_once 'controllers/DichVuController.php';
+        $controller = new DichVuController($pdo);
+        $action = $_GET['action'] ?? 'index';
+        if ($action === 'save') {
+            $controller->save();
+        } elseif ($action === 'toggle') {
+            $controller->toggle();
+        } elseif ($action === 'delete') {
+            $controller->delete();
+        } else {
+            $controller->index();
+        }
+         break;
+
     case 'benhnhan':
         require_once 'controllers/BenhNhanController.php';
         $controller = new BenhNhanController($pdo);

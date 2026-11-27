@@ -26,6 +26,9 @@
             <li class="nav-item">
                 <a href="index.php?page=admin_nguoidung" class="nav-link"><i class="bi bi-person-gear me-2"></i>Tài khoản & Phân quyền</a>
             </li>
+            <li class="nav-item">
+                <a href="index.php?page=admin_dichvu" class="nav-link"><i class="bi bi-person-gear me-2"></i>Quản lý dịch vụ</a>
+            </li>
         </ul>
         <div class="border-top pt-3">
             <a href="index.php?page=benhnhan" class="btn btn-outline-light btn-sm w-100 mb-2">

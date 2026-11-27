@@ -1,7 +1,10 @@
+CREATE DATABASE IF NOT EXISTS `ql_phongkham` CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+USE `ql_phongkham`;
+
 SET NAMES utf8mb4;
 SET FOREIGN_KEY_CHECKS = 0;
 
-DROP TABLE IF EXISTS `hoadon`, `chitiet_donthuoc`, `luotkham`, `thuoc`, `dichvu`, `phongkham`, `benhnhan`, `nguoidung`;
+DROP TABLE IF EXISTS `hoadon`, `chitiet_donthuoc`, `chitiet_dichvu`, `luotkham`, `thuoc`, `dichvu`, `phongkham`, `benhnhan`, `nguoidung`;
 
 -- 1. Bảng Người dùng
 CREATE TABLE `nguoidung` (
@@ -54,15 +57,16 @@ INSERT INTO `phongkham` (`MaPK`, `TenPK`, `MoTa`) VALUES
 CREATE TABLE `dichvu` (
   `MaDV` char(10) NOT NULL,
   `TenDV` varchar(100) NOT NULL,
+  `LoaiDV` enum('KhamBenh','XetNghiem','ChanDoanHinhAnh') NOT NULL DEFAULT 'KhamBenh',
   `DonGiaDV` decimal(12,2) NOT NULL DEFAULT 0.00,
   `TrangThai` tinyint(1) NOT NULL DEFAULT 1,
   PRIMARY KEY (`MaDV`),
-  CHECK (`DonGiaDV` >= 0)
+  CONSTRAINT `dichvu_chk_1` CHECK (`DonGiaDV` >= 0)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
-INSERT INTO `dichvu` (`MaDV`, `TenDV`, `DonGiaDV`, `TrangThai`) VALUES
-('DV01', 'Khám Nội tổng quát', 150000.00, 1),
-('DV02', 'Khám Tai - Mũi - Họng', 120000.00, 1);
+INSERT INTO `dichvu` (`MaDV`, `TenDV`, `LoaiDV`, `DonGiaDV`, `TrangThai`) VALUES
+('DV01', 'Khám Nội tổng quát', 'KhamBenh', 150000.00, 1),
+('DV02', 'Khám Tai - Mũi - Họng', 'KhamBenh', 120000.00, 1);
 
 -- 5. Bảng Thuốc
 CREATE TABLE `thuoc` (
@@ -74,8 +78,8 @@ CREATE TABLE `thuoc` (
   `HanSuDung` date NOT NULL,
   `CachDung` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`MaThuoc`),
-  CHECK (`DonGiaThuoc` >= 0),
-  CHECK (`SoLuongTon` >= 0)
+  CONSTRAINT `thuoc_chk_1` CHECK (`DonGiaThuoc` >= 0),
+  CONSTRAINT `thuoc_chk_2` CHECK (`SoLuongTon` >= 0)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 INSERT INTO `thuoc` (`MaThuoc`, `TenThuoc`, `DonViTinh`, `DonGiaThuoc`, `SoLuongTon`, `HanSuDung`, `CachDung`) VALUES
@@ -101,18 +105,33 @@ CREATE TABLE `luotkham` (
   KEY `MaBN` (`MaBN`),
   KEY `MaDV` (`MaDV`),
   KEY `MaBacSi` (`MaBacSi`),
-  CHECK (`GiaKham` >= 0),
   CONSTRAINT `luotkham_ibfk_1` FOREIGN KEY (`MaBN`) REFERENCES `benhnhan` (`MaBN`),
   CONSTRAINT `luotkham_ibfk_2` FOREIGN KEY (`MaPK`) REFERENCES `phongkham` (`MaPK`),
   CONSTRAINT `luotkham_ibfk_3` FOREIGN KEY (`MaDV`) REFERENCES `dichvu` (`MaDV`),
-  CONSTRAINT `luotkham_ibfk_4` FOREIGN KEY (`MaBacSi`) REFERENCES `nguoidung` (`MaND`)
+  CONSTRAINT `luotkham_ibfk_4` FOREIGN KEY (`MaBacSi`) REFERENCES `nguoidung` (`MaND`),
+  CONSTRAINT `luotkham_chk_1` CHECK (`GiaKham` >= 0)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 INSERT INTO `luotkham` (`MaLK`, `NgayKham`, `SoThuTu`, `TrieuChung`, `ChanDoan`, `GiaKham`, `TrangThaiLK`, `MaBN`, `MaPK`, `MaDV`, `MaBacSi`) VALUES
 ('LK001', '2026-10-26', 1, 'Triệu chứng mẫu', 'Chẩn đoán mẫu', 150000.00, 'ChoThanhToan', 'BN001', 'PK01', 'DV01', 'ND003'),
 ('LK002', '2026-10-26', 2, NULL, NULL, 150000.00, 'ChoKham', 'BN002', 'PK01', 'DV01', NULL);
 
--- 7. Bảng Chi tiết đơn thuốc
+-- 7. Bảng Chi tiết dịch vụ cận lâm sàng
+CREATE TABLE `chitiet_dichvu` (
+  `MaLK` char(10) NOT NULL,
+  `MaDV` char(10) NOT NULL,
+  `SoLuong` int NOT NULL DEFAULT 1,
+  `DonGia` decimal(12,2) NOT NULL,
+  `KetQua` text DEFAULT NULL,
+  PRIMARY KEY (`MaLK`,`MaDV`),
+  KEY `MaDV` (`MaDV`),
+  CONSTRAINT `chitiet_dichvu_ibfk_1` FOREIGN KEY (`MaLK`) REFERENCES `luotkham` (`MaLK`),
+  CONSTRAINT `chitiet_dichvu_ibfk_2` FOREIGN KEY (`MaDV`) REFERENCES `dichvu` (`MaDV`),
+  CONSTRAINT `chitiet_dichvu_chk_1` CHECK (`SoLuong` > 0),
+  CONSTRAINT `chitiet_dichvu_chk_2` CHECK (`DonGia` >= 0)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- 8. Bảng Chi tiết đơn thuốc
 CREATE TABLE `chitiet_donthuoc` (
   `MaLK` char(10) NOT NULL,
   `MaThuoc` char(10) NOT NULL,
@@ -121,16 +140,16 @@ CREATE TABLE `chitiet_donthuoc` (
   `DonGiaBan` decimal(12,2) NOT NULL,
   PRIMARY KEY (`MaLK`,`MaThuoc`),
   KEY `MaThuoc` (`MaThuoc`),
-  CHECK (`SoLuongKe` > 0),
-  CHECK (`DonGiaBan` >= 0),
   CONSTRAINT `chitiet_donthuoc_ibfk_1` FOREIGN KEY (`MaLK`) REFERENCES `luotkham` (`MaLK`),
-  CONSTRAINT `chitiet_donthuoc_ibfk_2` FOREIGN KEY (`MaThuoc`) REFERENCES `thuoc` (`MaThuoc`)
+  CONSTRAINT `chitiet_donthuoc_ibfk_2` FOREIGN KEY (`MaThuoc`) REFERENCES `thuoc` (`MaThuoc`),
+  CONSTRAINT `chitiet_donthuoc_chk_1` CHECK (`SoLuongKe` > 0),
+  CONSTRAINT `chitiet_donthuoc_chk_2` CHECK (`DonGiaBan` >= 0)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 INSERT INTO `chitiet_donthuoc` (`MaLK`, `MaThuoc`, `SoLuongKe`, `LieuDung`, `DonGiaBan`) VALUES
 ('LK001', 'TH003', 10, 'Dữ liệu mẫu để thử phần mềm', 1500.00);
 
--- 8. Bảng Hóa đơn
+-- 9. Bảng Hóa đơn
 CREATE TABLE `hoadon` (
   `MaHD` char(10) NOT NULL,
   `NgayLap` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -143,11 +162,11 @@ CREATE TABLE `hoadon` (
   PRIMARY KEY (`MaHD`),
   UNIQUE KEY `MaLK` (`MaLK`),
   KEY `MaThuNgan` (`MaThuNgan`),
-  CHECK (`TienKham` >= 0),
-  CHECK (`TienThuoc` >= 0),
-  CHECK (`TongTien` = `TienKham` + `TienThuoc`),
   CONSTRAINT `hoadon_ibfk_1` FOREIGN KEY (`MaLK`) REFERENCES `luotkham` (`MaLK`),
-  CONSTRAINT `hoadon_ibfk_2` FOREIGN KEY (`MaThuNgan`) REFERENCES `nguoidung` (`MaND`)
+  CONSTRAINT `hoadon_ibfk_2` FOREIGN KEY (`MaThuNgan`) REFERENCES `nguoidung` (`MaND`),
+  CONSTRAINT `hoadon_chk_1` CHECK (`TienKham` >= 0),
+  CONSTRAINT `hoadon_chk_2` CHECK (`TienThuoc` >= 0),
+  CONSTRAINT `hoadon_chk_3` CHECK (`TongTien` = (`TienKham` + `TienThuoc`))
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 INSERT INTO `hoadon` (`MaHD`, `NgayLap`, `TienKham`, `TienThuoc`, `TongTien`, `TrangThaiTT`, `MaLK`, `MaThuNgan`) VALUES
