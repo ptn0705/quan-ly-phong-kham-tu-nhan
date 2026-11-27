@@ -101,7 +101,7 @@ $dsBenhNhan = $dsBenhNhan ?? [];
                             <td class="text-end">
                                 <a href="index.php?page=benhnhan&action=index&edit=<?= urlencode($bn['MaBN']) ?>" class="btn btn-sm btn-warning">Sửa</a>
                                 <a href="index.php?page=benhnhan&action=delete&id=<?= urlencode($bn['MaBN']) ?>" class="btn btn-sm btn-danger" onclick="return confirm('Xóa bệnh nhân này?')">Xóa</a>
-                                <a href="index.php?page=benhnhan&action=lichsukham&id=<?= urlencode($bn['MaBN']) ?>" class="btn btn-sm btn-outline-info">Lịch sử khám</a>
+                                <a href="index.php?page=benhnhan&action=lichSuKhamBenh&id=<?= urlencode($bn['MaBN']) ?>" class="btn btn-sm btn-outline-info">Lịch sử khám</a>
                             </td>
                         </tr>
                         <?php endforeach; ?>

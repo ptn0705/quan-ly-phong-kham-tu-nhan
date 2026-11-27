@@ -56,7 +56,7 @@ if (!isset($_SESSION['user'])) {
 
 $role = $_SESSION['user']['VaiTro'] ?? '';
 $permissions = [
-    'benhnhan'        => ['LeTan'],
+    'benhnhan'        => ['LeTan', 'BacSi'],
     'luotkham'        => ['LeTan', 'BacSi'],
     'hoadon'          => ['ThuNgan'],
     'admin_dashboard' => ['QuanTriVien'],
@@ -125,6 +125,8 @@ switch ($page) {
             $controller->save();
         } elseif ($action === 'delete') {
             $controller->delete();
+        } elseif ($action === 'lichSuKhamBenh') {
+            $controller->lichSuKhamBenh();
         } else {
             $controller->index();
         }

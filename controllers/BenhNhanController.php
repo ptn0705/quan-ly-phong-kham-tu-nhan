@@ -59,7 +59,7 @@ class BenhNhanController {
         header("Location: index.php?page=benhnhan");
         exit;
     }
-    public function history() {
+    public function lichSuKhamBenh() {
         $maBN = trim($_GET['id'] ?? '');
         if ($maBN === '') {
             header("Location: index.php?page=benhnhan");
