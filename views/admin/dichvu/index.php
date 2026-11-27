@@ -40,7 +40,7 @@ $loaiLabels = [
                     <div class="mb-3">
                         <label class="form-label">Tên dịch vụ <span class="text-danger">*</span></label>
                         <input type="text" name="TenDV" class="form-control" required
-                               placeholder="VD: Chụp X-quang phổi, Xét nghiệm máu..."
+                               placeholder=""
                                value="<?= htmlspecialchars($editDV['TenDV'] ?? '') ?>">
                     </div>
 
