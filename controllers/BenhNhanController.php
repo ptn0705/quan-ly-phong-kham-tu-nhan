@@ -82,7 +82,7 @@ class BenhNhanController {
         }
         unset($lk);
 
-        require_once __DIR__ . '/../views/user/benhnhan/history.php';
+        require_once __DIR__ . '/../views/user/benhnhan/lichSuKham.php';
     }
 
 }
