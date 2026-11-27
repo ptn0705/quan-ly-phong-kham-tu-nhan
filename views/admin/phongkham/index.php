@@ -34,14 +34,14 @@ require_once __DIR__ . '/../../layouts/admin_header.php';
                     <div class="mb-3">
                         <label class="form-label">Tên phòng khám <span class="text-danger">*</span></label>
                         <input type="text" name="TenPK" class="form-control" required
-                               placeholder="VD: Phòng khám Nhi, Phòng siêu âm..."
+                               placeholder=""
                                value="<?= htmlspecialchars($editPK['TenPK'] ?? '') ?>">
                     </div>
 
                     <div class="mb-3">
                         <label class="form-label">Mô tả / Vị trí</label>
                         <textarea name="MoTa" class="form-control" rows="3"
-                                  placeholder="VD: Tầng 2 - Khu chuyên khoa"><?= htmlspecialchars($editPK['MoTa'] ?? '') ?></textarea>
+                                  placeholder=""><?= htmlspecialchars($editPK['MoTa'] ?? '') ?></textarea>
                     </div>
 
                     <div class="d-flex gap-2">

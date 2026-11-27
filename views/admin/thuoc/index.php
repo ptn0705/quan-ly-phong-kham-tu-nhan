@@ -37,7 +37,7 @@ $next30Days = date('Y-m-d', strtotime('+30 days'));
                     <div class="mb-3">
                         <label class="form-label">Tên thuốc <span class="text-danger">*</span></label>
                         <input type="text" name="TenThuoc" class="form-control" required
-                               placeholder="VD: Paracetamol 500mg"
+                               placeholder=""
                                value="<?= htmlspecialchars($editThuoc['TenThuoc'] ?? '') ?>">
                     </div>
 
@@ -71,7 +71,7 @@ $next30Days = date('Y-m-d', strtotime('+30 days'));
                     <div class="mb-3">
                         <label class="form-label">Cách dùng mặc định</label>
                         <textarea name="CachDung" class="form-control" rows="2"
-                                  placeholder="VD: Uống sau ăn, theo chỉ định bác sĩ"><?= htmlspecialchars($editThuoc['CachDung'] ?? '') ?></textarea>
+                                  placeholder=""><?= htmlspecialchars($editThuoc['CachDung'] ?? '') ?></textarea>
                     </div>
 
                     <div class="d-flex gap-2">
