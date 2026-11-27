@@ -61,6 +61,9 @@ $permissions = [
     'hoadon'          => ['ThuNgan'],
     'admin_dashboard' => ['QuanTriVien'],
     'admin_nguoidung' => ['QuanTriVien'],
+    'admin_dichvu'    => ['QuanTriVien'],
+    'admin_phongkham' => ['QuanTriVien'],
+    'admin_thuoc'     => ['QuanTriVien'],
 ];
 
 if (isset($permissions[$page]) && !in_array($role, $permissions[$page])) {
