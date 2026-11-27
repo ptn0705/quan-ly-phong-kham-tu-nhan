@@ -20,7 +20,7 @@ class DichVuModel {
             $params[':loai'] = $loaiDV;
         }
 
-        $sql .= " ORDER BY LoaiDV ASC, MaDV ASC";
+       $sql .= " ORDER BY CAST(SUBSTRING(MaDV, 3) AS UNSIGNED) ASC";
         $stmt = $this->conn->prepare($sql);
         $stmt->execute($params);
         return $stmt->fetchAll();
