@@ -59,30 +59,4 @@ class BenhNhanController {
         header("Location: index.php?page=benhnhan");
         exit;
     }
-    public function lichSuKhamBenh() {
-        $maBN = trim($_GET['id'] ?? '');
-        if ($maBN === '') {
-            header("Location: index.php?page=benhnhan");
-            exit;
-        }
-
-        $benhNhan = $this->model->getById($maBN);
-        if (!$benhNhan) {
-            $_SESSION['err_msg'] = "Không tìm thấy hồ sơ bệnh nhân!";
-            header("Location: index.php?page=benhnhan");
-            exit;
-        }
-
-        $lichSuKham = $this->model->getLichSuKham($maBN);
-
-        // Gắn kèm chỉ định cận lâm sàng và đơn thuốc cho từng lượt khám
-        foreach ($lichSuKham as &$lk) {
-            $lk['dsDichVu']  = $this->model->getDichVuTheoLuotKham($lk['MaLK']);
-            $lk['dsThuoc']   = $this->model->getDonThuocTheoLuotKham($lk['MaLK']);
-        }
-        unset($lk);
-
-        require_once __DIR__ . '/../views/user/benhnhan/lichsukham.php';
-    }
-
 }

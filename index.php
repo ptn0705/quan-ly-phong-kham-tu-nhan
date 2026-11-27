@@ -125,8 +125,6 @@ switch ($page) {
             $controller->save();
         } elseif ($action === 'delete') {
             $controller->delete();
-        } elseif ($action === 'lichSuKhamBenh') {
-            $controller->lichSuKhamBenh();
         } else {
             $controller->index();
         }

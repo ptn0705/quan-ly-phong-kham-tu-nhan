@@ -50,40 +50,4 @@ class BenhNhanModel{
         $stmt = $this->conn->prepare($sql);
         return $stmt->execute($data);
     }
-
-     // Lấy toàn bộ các lượt khám của 1 bệnh nhân (mới nhất lên đầu)
-    public function getLichSuKham($maBN) {
-        $sql = "SELECT lk.*, pk.TenPK, dv.TenDV, nd.HoTen AS TenBacSi
-                FROM luotkham lk
-                LEFT JOIN phongkham pk ON lk.MaPK = pk.MaPK
-                LEFT JOIN dichvu dv ON lk.MaDV = dv.MaDV
-                LEFT JOIN nguoidung nd ON lk.MaBacSi = nd.MaND
-                WHERE lk.MaBN = ?
-                ORDER BY lk.NgayKham DESC, lk.MaLK DESC";
-        $stmt = $this->conn->prepare($sql);
-        $stmt->execute([$maBN]);
-        return $stmt->fetchAll();
-    }
-
-    // Lấy danh sách dịch vụ cận lâm sàng (X-quang, xét nghiệm...) theo mã lượt khám
-    public function getDichVuTheoLuotKham($maLK) {
-        $sql = "SELECT ct.*, dv.TenDV, dv.LoaiDV
-                FROM chitiet_dichvu ct
-                JOIN dichvu dv ON ct.MaDV = dv.MaDV
-                WHERE ct.MaLK = ?";
-        $stmt = $this->conn->prepare($sql);
-        $stmt->execute([$maLK]);
-        return $stmt->fetchAll();
-    }
-
-    // Lấy chi tiết đơn thuốc đã kê theo mã lượt khám
-    public function getDonThuocTheoLuotKham($maLK) {
-        $sql = "SELECT ct.*, t.TenThuoc, t.DonViTinh
-                FROM chitiet_donthuoc ct
-                JOIN thuoc t ON ct.MaThuoc = t.MaThuoc
-                WHERE ct.MaLK = ?";
-        $stmt = $this->conn->prepare($sql);
-        $stmt->execute([$maLK]);
-        return $stmt->fetchAll();
-    }
 }
