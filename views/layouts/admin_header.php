@@ -29,6 +29,13 @@
             <li class="nav-item">
                 <a href="index.php?page=admin_dichvu" class="nav-link"><i class="bi bi-person-gear me-2"></i>Quản lý dịch vụ</a>
             </li>
+             <li class="nav-item">
+                <a href="index.php?page=admin_phongkham" class="nav-link"><i class="bi bi-person-gear me-2"></i>Quản lý phòng khám</a>
+            </li>
+             <li class="nav-item">
+                <a href="index.php?page=admin_thuoc" class="nav-link"><i class="bi bi-person-gear me-2"></i>Quản lý thuốc</a>
+            </li>
+
         </ul>
         <div class="border-top pt-3">
             <a href="index.php?page=benhnhan" class="btn btn-outline-light btn-sm w-100 mb-2">

@@ -88,6 +88,32 @@ switch ($page) {
         }
          break;
 
+         case 'admin_phongkham':
+        require_once 'controllers/PhongKhamController.php';
+        $controller = new PhongKhamController($pdo);
+        $action = $_GET['action'] ?? 'index';
+        if ($action === 'save') {
+            $controller->save();
+        } elseif ($action === 'delete') {
+            $controller->delete();
+        } else {
+            $controller->index();
+        }
+        break;
+
+    case 'admin_thuoc':
+        require_once 'controllers/ThuocController.php';
+        $controller = new ThuocController($pdo);
+        $action = $_GET['action'] ?? 'index';
+        if ($action === 'save') {
+            $controller->save();
+        } elseif ($action === 'delete') {
+            $controller->delete();
+        } else {
+            $controller->index();
+        }
+        break;
+
     case 'benhnhan':
         require_once 'controllers/BenhNhanController.php';
         $controller = new BenhNhanController($pdo);

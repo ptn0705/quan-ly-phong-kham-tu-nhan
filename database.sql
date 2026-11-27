@@ -116,7 +116,7 @@ INSERT INTO `luotkham` (`MaLK`, `NgayKham`, `SoThuTu`, `TrieuChung`, `ChanDoan`,
 ('LK001', '2026-10-26', 1, 'Triệu chứng mẫu', 'Chẩn đoán mẫu', 150000.00, 'ChoThanhToan', 'BN001', 'PK01', 'DV01', 'ND003'),
 ('LK002', '2026-10-26', 2, NULL, NULL, 150000.00, 'ChoKham', 'BN002', 'PK01', 'DV01', NULL);
 
--- 7. Bảng Chi tiết dịch vụ cận lâm sàng
+-- 7. Bảng Chi tiết dịch vụ 
 CREATE TABLE `chitiet_dichvu` (
   `MaLK` char(10) NOT NULL,
   `MaDV` char(10) NOT NULL,
